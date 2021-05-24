@@ -2,18 +2,18 @@ const User = require("../models/userSchema");
 const bcrypt = require("bcryptjs");
 const getToken = require("../utils/getToken");
 const Joi = require("joi");
-const {validateAdduser } = require("../validations/uservalidation");
+const { validateAdduser } = require("../validations/uservalidation");
 
 const addUser = async (req, res) => {
   // validate user
   const { error } = validateAdduser.validate(req.body);
- if (error) return res.status(403).send(error.details[0].message);
-  
+  if (error) return res.status(403).send(error.details[0].message);
+
   // complexity level and hashing using bcrypt
   const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(req.body.password, salt)
+  const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-// find user from db
+  // find user from db
   const emailFound = await User.findOne({ email: req.body.email });
   if (emailFound) return res.status(404).send("email already exit");
 
@@ -34,25 +34,26 @@ const addUser = async (req, res) => {
 // add user login
 const userlogin = async (req, res) => {
   // user varification
-  const user = await User.findOne({ email: req.body.email })
-  if (!user) return res.status(404).send("account not found")
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) return res.status(404).send("account not found");
   // password verification
-  const varifiedPassword = await bcrypt.compare(req.body.password, user.password)
-  if (!varifiedPassword) return res.status(404).send("email or password invalid");
+  const varifiedPassword = await bcrypt.compare(
+    req.body.password,
+    user.password
+  );
+  if (!varifiedPassword)
+    return res.status(404).send("email or password invalid");
 
   // // assign a token
   // const getToken_id = jwt.sign({ _id: user_id }, process.env.SCERTE_CODE, { expireIn: "30d" });
-  
+
   // res.headers("authorization", token_id).send(token_id)
   res.status(202).json({
     _id: user._id,
     // name: user.name,
     email: user.email,
     password: user.password,
-    token: getToken(user._id)
+    token: getToken(user._id),
   });
-
-
-  res.json({user})
 };
 module.exports = { addUser, userlogin };
