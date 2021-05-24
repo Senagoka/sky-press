@@ -49,9 +49,9 @@ const userlogin = async (req, res) => {
   // res.headers("authorization", token_id).send(token_id)
   res.status(202).json({
     _id: user._id,
-    name: newUser.name,
+    name: user.name,
     email: user.email,
-    phone: newUser.phone,
+    phone: user.phone,
     token: getToken(user._id),
   });
 };
