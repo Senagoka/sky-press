@@ -15,8 +15,8 @@ connectDB();
 
 // middlwares
 app.use(express.json());
-app.use(morgan("dev"));
 app.use(cors());
+app.use(morgan("dev"));
 
 // route
 app.use("/api/v1/products", productsRoute);

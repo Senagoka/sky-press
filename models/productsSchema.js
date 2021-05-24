@@ -18,7 +18,7 @@ const productsSchema = mongoose.Schema(
     },
     images: [
       {
-        product_id: {
+        products: {
           type: String,
           required: true,
         },

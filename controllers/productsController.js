@@ -1,4 +1,3 @@
-const { json } = require("express");
 const Product = require("../models/productsSchema");
 
 // adding a new products

@@ -40,14 +40,15 @@ const userlogin = async (req, res) => {
   const varifiedPassword = await bcrypt.compare(req.body.password, user.password)
   if (!varifiedPassword) return res.status(404).send("email or password invalid");
 
-  // assign a token
-  consttoken_id = jwt.sign({ _id: user_id }, process.env.SCERTE_CODE, { expireIn: "30d" });
+  // // assign a token
+  // const getToken_id = jwt.sign({ _id: user_id }, process.env.SCERTE_CODE, { expireIn: "30d" });
   
   // res.headers("authorization", token_id).send(token_id)
   res.status(202).json({
     _id: user._id,
-    name: user.name,
+    // name: user.name,
     email: user.email,
+    password: user.password,
     token: getToken(user._id)
   });
 
