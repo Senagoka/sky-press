@@ -11,18 +11,12 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    password: {
+    phone: {
       type: String,
       required: true,
     },
-    cart: {
-      type: Array,
-      required: true,
-    },
-    
-
-    wishlist: {
-      type: Array,
+    password: {
+      type: String,
       required: true,
     },
   },

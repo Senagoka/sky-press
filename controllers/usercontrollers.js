@@ -20,6 +20,7 @@ const addUser = async (req, res) => {
   const newUser = new User({
     name: req.body.name,
     email: req.body.email,
+    phone: req.body.phone,
     password: hashedPassword,
   });
 
@@ -28,6 +29,7 @@ const addUser = async (req, res) => {
     _id: newUser._id,
     name: newUser.name,
     email: newUser.email,
+    phone: newUser.phone,
     token: getToken(newUser._id),
   });
 };
@@ -44,15 +46,12 @@ const userlogin = async (req, res) => {
   if (!varifiedPassword)
     return res.status(404).send("email or password invalid");
 
-  // // assign a token
-  // const getToken_id = jwt.sign({ _id: user_id }, process.env.SCERTE_CODE, { expireIn: "30d" });
-
   // res.headers("authorization", token_id).send(token_id)
   res.status(202).json({
     _id: user._id,
-    // name: user.name,
+    name: newUser.name,
     email: user.email,
-    password: user.password,
+    phone: newUser.phone,
     token: getToken(user._id),
   });
 };
